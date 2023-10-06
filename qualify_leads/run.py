@@ -65,7 +65,7 @@ def saveData(descriptions, urls, predictions):
         ws.write(index + 1, 2, predictions[index])
     wb.save('output/predictions.xls')
 
-def qualifyLeads():
+def qualifyLeads(vectorizer, tfidf_transformer, clf):
     sheet = getSheet('input/data.xlsx')
     descriptions = getDescriptionsFromSheet(sheet)
     urls = getUrlsFromSheet(sheet)
@@ -79,4 +79,4 @@ def qualifyLeads():
     saveData(descriptions, urls, predictions)
 
 vectorizer, tfidf_transformer, clf = importAlgorithms()
-qualifyLeads()
+qualifyLeads(vectorizer, tfidf_transformer, clf)
