@@ -1,7 +1,6 @@
-import cPickle
 import re
-import numpy as np
-import xlrd, xlwt
+import xlrd
+import xlwt
 from nltk.stem.snowball import SnowballStemmer
 from nltk.corpus import stopwords
 from sklearn.externals import joblib
@@ -16,7 +15,7 @@ def getSheet(name):
 
 vectorizer = joblib.load("algorithms/vectorizer")
 forest = joblib.load("algorithms/forest")
-###gnb=joblib.load("algorithms/gnb")
+# gnb=joblib.load("algorithms/gnb")
 tfidf_transformer = joblib.load("algorithms/tfidf_transformer")
 
 def cleanUp(descriptions):
@@ -27,7 +26,9 @@ def cleanUp(descriptions):
         for word in desc.split():
             stemmed_word = stemmer.stem(word)
             stemmed_desc.append(stemmed_word)
-        meaningful_desc = [word.lower() for word in stemmed_desc if not word in stopWords]
+        meaningful_desc = [
+            word.lower() for word in stemmed_desc if word not in stopWords
+        ]
         clean_descriptions.append(" ".join(meaningful_desc))
     return clean_descriptions
 
@@ -67,9 +68,11 @@ def qualifyLeads():
     urls = getUrlsFromSheet(sheet)
     clean_descriptions = cleanUp(descriptions)
     vectorized_descriptions = transform(clean_descriptions, vectorizer)
-    transformed_descriptions = transform(vectorized_descriptions, tfidf_transformer)
+    transformed_descriptions = transform(
+        vectorized_descriptions, tfidf_transformer
+    )
     predictions = forest.predict(transformed_descriptions)
-    ###predictions = gnb.predict(transformed_descriptions)
+    # predictions = gnb.predict(transformed_descriptions)
     saveData(descriptions, urls, predictions)
 
 qualifyLeads()
