@@ -1,4 +1,5 @@
 import re
+import csv
 import xlrd
 import xlwt
 from nltk.stem.snowball import SnowballStemmer
@@ -13,10 +14,12 @@ def getSheet(name):
     sheet = sheets.sheet_by_index(0)
     return sheet
 
-vectorizer = joblib.load("algorithms/vectorizer")
-forest = joblib.load("algorithms/forest")
-# gnb=joblib.load("algorithms/gnb")
-tfidf_transformer = joblib.load("algorithms/tfidf_transformer")
+def importAlgorithms():
+    vectorizer = joblib.load("algorithms/vectorizer")
+    tfidf_transformer = joblib.load("algorithms/tfidf_transformer")
+    clf = joblib.load("algorithms/forest")
+    # clf=joblib.load("algorithms/gnb")
+    return vectorizer, tfidf_transformer, clf
 
 def cleanUp(descriptions):
     clean_descriptions = []
@@ -75,4 +78,5 @@ def qualifyLeads():
     # predictions = gnb.predict(transformed_descriptions)
     saveData(descriptions, urls, predictions)
 
+vectorizer, tfidf_transformer, clf = importAlgorithms()
 qualifyLeads()

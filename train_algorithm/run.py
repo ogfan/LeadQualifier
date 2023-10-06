@@ -111,16 +111,16 @@ forest_score, forest = runForest(X_train, X_test, Y_train, Y_test)
 print('Random Forest score: ', forest_score)
 # print ('Random Gaussian Naive Bayes score: ', gnb_score)
 
-with open('forest', 'wb') as f:
+with open('../qualify_leads/algorithms/forest', 'wb') as f:
     cPickle.dump(forest, f)
 
 # with open('gnb', 'wb') as fi:
 #     cPickle.dump(gnb, fi)
 
-with open('vectorizer', 'wb') as file:
+with open('../qualify_leads/algorithms/vectorizer', 'wb') as file:
     cPickle.dump(vectorizer, file)
 
-with open('tfidf_transformer', 'wb') as file:
+with open('../qualify_leads/algorithms/tfidf_transformer', 'wb') as file:
     cPickle.dump(tfidf_transformer, file)
 
 
